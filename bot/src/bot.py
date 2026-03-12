@@ -61,7 +61,9 @@ def main() -> None:
         logger.error("TELEGRAM_TOKEN not found. Get it from @BotFather")
         return
 
-    if not LLM_API_KEY 
+    if not LLM_API_KEY or not LLM_MODEL:
+        logger.error("LLM_API_KEY or LLM_MODEL not found. Set them in .env")
+        return
 
 
     app = Application.builder().token(TELEGRAM_TOKEN).build()

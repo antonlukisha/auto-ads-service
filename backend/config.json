@@ -1,0 +1,24 @@
+{
+  "ShutdownTimeoutSeconds": 30,
+  "JWT": {
+    "Algorithm": "HS256",
+    "AccessTokenExpireMinutes": 75
+  },
+  "Delivery": {
+    "Server": {
+      "ProxyHeader": "X-Real-IP",
+      "ReadTimeoutSeconds": 30,
+      "WriteTimeoutSeconds": 30,
+      "DisableStartupMessage": false
+    },
+    "Cors": {
+      "AllowOrigins": "*",
+      "AllowHeaders": "*",
+      "ExposeHeaders": "",
+      "AllowCredentials": false
+    },
+    "Serve": {
+      "Address": "localhost:4444"
+    }
+  }
+}

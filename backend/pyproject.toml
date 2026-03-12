@@ -1,0 +1,71 @@
+[project]
+name = "auto-ads-service-backend"
+version = "1.0.0"
+description = "Auto ads parsing service"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    {name = "Anton Lukisha", email = "anton.lukisha.dev@gmail.com"},
+]
+license = {text = "MIT"}
+
+dependencies = [
+    "fastapi>=0.135.1",
+    "uvicorn[standard]>=0.41.0",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.13.1",
+    "sqlalchemy>=2.0.48",
+    "asyncpg>=0.31.0",
+    "alembic>=1.18.4",
+    "python-dotenv>=1.2.2",
+    "pydantic-extra-types>=2.11.0",
+    "python-multipart>=0.0.22",
+    "orjson>=3.11.7",
+    "psycopg2-binary>=2.9.11",
+    "passlib[bcrypt]>=1.7.4",
+    "python-jose[cryptography]>=3.5.0",
+    "deep-translator>=1.11.4",
+    "beautifulsoup4>=4.14.3",
+    "tenacity>=9.1.4"
+]
+
+[project.scripts]
+service = "app.main:run"
+service-dev = "scripts.run:dev"
+service-check = "scripts.run:lint"
+create-demo-seed = "scripts.seed:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "httpx>=0.28.1",
+    "black>=26.1.0",
+    "isort>=8.0.1",
+    "flake8>=7.3.0",
+    "mypy>=1.19.1",
+    "ipython>=9.10.0",
+    "types-requests>=2.32.4.20260107"
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["app", "scripts"]
+
+[tool.black]
+line-length = 100
+target-version = ["py313"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true

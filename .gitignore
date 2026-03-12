@@ -1,0 +1,42 @@
+# Python
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/*.so
+backend/.Python
+backend/.env
+backend/.venv
+backend/venv/
+backend/ENV/
+backend/env/
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/.tox/
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/.flake8
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Project
+backend/*.db
+backend/*.sqlite3
+backend/alembic/versions/*.py
+!backend/alembic/versions/__init__.py
+
+# Logs
+backend/*.log
+backend/logs/
+
+# Build
+backend/dist/
+backend/build/
+backend/*.egg-info/

@@ -1,4 +1,4 @@
-# Python
+# Backend
 backend/__pycache__/
 backend/*.py[cod]
 backend/*$py.class
@@ -11,13 +11,49 @@ backend/ENV/
 backend/env/
 backend/pip-log.txt
 backend/pip-delete-this-directory.txt
-backend/.pytest_cache/
-backend/.coverage
 backend/htmlcov/
 backend/.tox/
 backend/.mypy_cache/
 backend/.ruff_cache/
 backend/.flake8
+backend/*.db
+backend/*.sqlite3
+backend/alembic/versions/*.py
+!backend/alembic/versions/__init__.py
+backend/*.log
+backend/logs/
+backend/dist/
+backend/build/
+backend/*.egg-info/
+
+# Bot
+bot/__pycache__/
+bot/*.py[cod]
+bot/*$py.class
+bot/*.so
+bot/.Python
+bot/.env
+bot/.venv
+bot/venv/
+bot/ENV/
+bot/env/
+bot/pip-log.txt
+bot/pip-delete-this-directory.txt
+bot/htmlcov/
+bot/.tox/
+bot/.mypy_cache/
+bot/.ruff_cache/
+bot/.flake8
+bot/*.log
+bot/logs/
+bot/dist/
+bot/build/
+bot/*.egg-info/
+
+# Frontend
+frontend/node_modules/
+frontend/*.log
+frontend/logs/
 
 # IDE
 .vscode/
@@ -26,17 +62,7 @@ backend/.flake8
 *.swo
 *~
 
-# Project
-backend/*.db
-backend/*.sqlite3
-backend/alembic/versions/*.py
-!backend/alembic/versions/__init__.py
-
-# Logs
-backend/*.log
-backend/logs/
-
 # Build
-backend/dist/
-backend/build/
-backend/*.egg-info/
+dist/
+build/
+*.egg-info/

@@ -16,7 +16,7 @@ export default function Login() {
         setLoading(true)
 
         try {
-            // await client.login(username, password)
+            await api.login({ username, password })
             navigate('/')
         } catch (err: any) {
             setError(err.response?.data?.detail || 'Ошибка авторизации')
@@ -26,14 +26,7 @@ export default function Login() {
     }
 
     return (
-        <Box sx={{
-            minHeight: '100vh',
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            bgcolor: 'background.level1'
-        }}>
+        <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.level1' }}>
             <Card sx={{ maxWidth: 400, width: '100%', p: 4 }}>
                 <Typography level="h3" sx={{ mb: 3, textAlign: 'center' }}>
                     Объявления <Box component="span" sx={{ fontWeight: 'bold', color: 'primary.500' }}>carsensor.net</Box>
@@ -44,7 +37,7 @@ export default function Login() {
                 <form onSubmit={handleSubmit}>
                     <Stack spacing={2}>
                         <Input
-                            type="username"
+                            type="text"
                             placeholder="Логин"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}

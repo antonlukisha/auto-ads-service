@@ -1,17 +1,17 @@
 export interface LoginRequest {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
 }
 
 export interface LoginResponse {
-  access_token: string;
-  token_type: string;
-  user: User;
+    access_token: string;
+    token_type: string;
+    user: User;
 }
 
 export interface User {
-  id: string;
-  username: string;
-  created_at: string;
+    id: string;
+    username: string;
+    created_at: string;
 }
 

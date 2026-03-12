@@ -1,5 +1,7 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
-import { LoginRequest, LoginResponse, Car, FilterParams } from '../types'
+import axios from "axios";
+import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import type { Car, FilterParams } from "../types/car";
+import type { LoginRequest, LoginResponse } from "../types/user";
 
 class ApiClient {
   private client: AxiosInstance

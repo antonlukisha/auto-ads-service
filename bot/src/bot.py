@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -7,6 +6,9 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 from src.logging import get_logger, setup_logging
+
+from src.config import LLM_API_KEY, TELEGRAM_TOKEN, LLM_MODEL
+from src.search import search_cars_via_llm
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -46,10 +48,15 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    logger.info(f"Request from {update.effective_user.first_name}: {update.message.text}")
+    text = update.message.text
+    logger.info(f"Request from {update.effective_user.first_name}: {text}")
     await update.message.chat.send_action(action="typing")
-    answer = await
-    await update.message.reply_text(answer, parse_mode="Markdown", disable_web_page_preview=False)
+    try:
+        answer = await search_cars_via_llm(text)
+        await update.message.reply_text(answer, parse_mode="Markdown", disable_web_page_preview=False)
+    except Exception as e:
+        update.message.reply_text(e)
+
 
 
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -62,7 +69,7 @@ def main() -> None:
         return
 
     if not LLM_API_KEY or not LLM_MODEL:
-        logger.error("LLM_API_KEY or LLM_MODEL not found. Set them in .env")
+        logger.error("LLM_API_KEY or LLM_MODEL not found.")
         return
 
 

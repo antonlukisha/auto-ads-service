@@ -17,7 +17,10 @@ router = APIRouter(tags=["auth"])
     response_model=LoginResponse,
     summary="Admin user login",
     description="Authenticate admin user and return JWT token",
-    responses={400: {"model": ErrorResponse}, 500: {"model": ErrorResponse}},
+    responses={
+        401: {"model": ErrorResponse, "description": "Unauthorized"},
+        500: {"model": ErrorResponse, "description": "Internal server error"},
+    },
 )
 async def login(request: LoginRequest, service: AuthService = Depends(get_auth_service)):
     try:

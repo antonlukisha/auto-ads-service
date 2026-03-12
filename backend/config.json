@@ -12,10 +12,10 @@
       "DisableStartupMessage": false
     },
     "Cors": {
-      "AllowOrigins": "*",
+      "AllowOrigins": "http://localhost:3333, http://127.0.0.1:3333",
       "AllowHeaders": "*",
       "ExposeHeaders": "",
-      "AllowCredentials": false
+      "AllowCredentials": true
     },
     "Serve": {
       "Address": "localhost:4444"

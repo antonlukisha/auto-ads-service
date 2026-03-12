@@ -1,7 +1,6 @@
 import asyncio
 import sys
 from contextlib import asynccontextmanager
-from multiprocessing import Process
 from pathlib import Path
 from typing import AsyncGenerator
 
@@ -22,8 +21,6 @@ setup_logging()
 logger = get_logger(__name__)
 
 config: Config | None = None
-
-scraper_process: Process | None = None
 
 
 @asynccontextmanager
@@ -49,10 +46,9 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
     yield
 
     logger.info("Shutting down...")
-
+    scraper_worker.stop()
     await db.close()
     logger.info("Database disconnected")
-    scraper_worker.stop()
 
 
 def create_app(cfg: Config | None = None) -> FastAPI | None:

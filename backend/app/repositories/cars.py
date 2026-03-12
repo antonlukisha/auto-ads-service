@@ -46,6 +46,8 @@ class CarRepository(BaseRepository[Car]):
                     query = query.where(self.model.brand.ilike(f"%{brand}%"))
                 if model := filters.get("model"):
                     query = query.where(self.model.model.ilike(f"%{model}%"))
+                if year := filters.get("year"):
+                    query = query.where(self.model.year.ilike(f"%{year}%"))
                 if color := filters.get("color"):
                     query = query.where(self.model.color.ilike(f"%{color}%"))
                 if min_price := filters.get("min_price"):

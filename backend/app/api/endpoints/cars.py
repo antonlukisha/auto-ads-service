@@ -28,6 +28,9 @@ async def get_cars(
     min_price: float | None = Query(None, ge=0, description="Minimum price"),
     max_price: float | None = Query(None, ge=0, description="Maximum price"),
     color: str | None = Query(None, description="Filter by color"),
+    year: int | None = Query(
+        None, ge=1900, le=datetime.now().year + 1, description="Year"
+    ),
     min_year: int | None = Query(
         None, ge=1900, le=datetime.now().year + 1, description="Minimum year"
     ),
@@ -50,6 +53,7 @@ async def get_cars(
             min_price,
             max_price,
             color,
+            year,
             min_year,
             max_year,
             sort_by,

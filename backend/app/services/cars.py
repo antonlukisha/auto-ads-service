@@ -19,7 +19,6 @@ class CarService:
         min_price: float | None = None,
         max_price: float | None = None,
         color: str | None = None,
-        year: int | None = None,
         min_year: int | None = None,
         max_year: int | None = None,
         sort_by: str = "created_at",
@@ -42,8 +41,6 @@ class CarService:
         :type max_price: float | None
         :param color: Filter by color
         :type color: str | None
-        :param year: Year
-        :type year: int | None
         :param min_year: Minimum year
         :type min_year: int | None
         :param max_year: Maximum year
@@ -67,7 +64,6 @@ class CarService:
                 limit=limit,
                 brand=brand,
                 model=model,
-                year=year,
                 min_price=min_price,
                 max_price=max_price,
                 color=color,

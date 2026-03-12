@@ -1,11 +1,12 @@
-import orjson
-from openai import AsyncOpenAI
-from dotenv import load_dotenv
 import socket
-from src.logging import get_logger
-from src.models import LLMResult
+
+import orjson
+from dotenv import load_dotenv
+from openai import AsyncOpenAI
 
 from src.config import LLM_API_KEY, LLM_MODEL, LLM_URL
+from src.logging import get_logger
+from src.models import LLMResult
 
 load_dotenv()
 logger = get_logger("llm_agent")
@@ -25,8 +26,8 @@ class LLMAgent:
             api_key=self.api_key,
             default_headers={
                 "HTTP-Referer": f"http://{socket.gethostname()}:5555",
-                "X-Title": "Auto Ads Bot"
-            }
+                "X-Title": "Auto Ads Bot",
+            },
         )
 
         self.search_function = {
@@ -39,44 +40,38 @@ class LLMAgent:
                     "properties": {
                         "brand": {
                             "type": "string",
-                            "description": "Марка автомобиля (например: BMW, Toyota, Honda, Mercedes)"
+                            "description": "Марка автомобиля (например: BMW, Toyota, Honda, Mercedes)",
                         },
                         "model": {
                             "type": "string",
-                            "description": "Модель автомобиля (например: X5, Camry, Accord)"
+                            "description": "Модель автомобиля (например: X5, Camry, Accord)",
                         },
-                        "year": {
-                            "type": "integer",
-                            "description": "Конкретный год выпуска"
-                        },
+                        "year": {"type": "integer", "description": "Конкретный год выпуска"},
                         "color": {
                             "type": "string",
-                            "description": "Цвет автомобиля (например: красный, черный, белый)"
+                            "description": "Цвет автомобиля (например: красный, черный, белый)",
                         },
                         "min_year": {
                             "type": "integer",
-                            "description": "Минимальный год выпуска (от)"
+                            "description": "Минимальный год выпуска (от)",
                         },
                         "max_year": {
                             "type": "integer",
-                            "description": "Максимальный год выпуска (до)"
+                            "description": "Максимальный год выпуска (до)",
                         },
-                        "min_price": {
-                            "type": "number",
-                            "description": "Минимальная цена в рублях"
-                        },
+                        "min_price": {"type": "number", "description": "Минимальная цена в рублях"},
                         "max_price": {
                             "type": "number",
-                            "description": "Максимальная цена в рублях"
+                            "description": "Максимальная цена в рублях",
                         },
                         "limit": {
                             "type": "integer",
                             "description": "Количество результатов (по умолчанию 10)",
-                            "default": 10
-                        }
-                    }
-                }
-            }
+                            "default": 10,
+                        },
+                    },
+                },
+            },
         }
 
     async def invoke(self, user_prompt: str) -> LLMResult:
@@ -96,16 +91,13 @@ class LLMAgent:
                             "Если 'от 1.5 млн' — min_price = 1500000. "
                             "Если 'после 2020' — min_year = 2020. "
                             "Если 'до 2018' — max_year = 2018."
-                        )
+                        ),
                     },
-                    {
-                        "role": "user",
-                        "content": user_prompt
-                    }
+                    {"role": "user", "content": user_prompt},
                 ],
                 tools=[self.search_function],
                 tool_choice="auto",
-                temperature=0.1
+                temperature=0.1,
             )
 
             message = response.choices[0].message
@@ -115,22 +107,14 @@ class LLMAgent:
                 filters = orjson.loads(tool_call.function.arguments)
                 logger.info(f"LLM extracted filters: {filters}")
 
-                return LLMResult(
-                    success=True,
-                    filters=filters,
-                    text=None
-                )
+                return LLMResult(success=True, filters=filters, text=None)
             else:
                 logger.info(f"LLM did not find any filters: {message.content}")
-                return LLMResult(
-                    success=False
-                )
+                return LLMResult(success=False)
 
         except Exception as e:
             logger.error(f"Error in LLM: {e}")
-            return LLMResult(
-                success=False
-            )
+            return LLMResult(success=False)
 
 
 llm = LLMAgent()

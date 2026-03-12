@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-bot = "src.bot:main"
+bot = "src.bot:run"
 
 [build-system]
 requires = ["hatchling"]

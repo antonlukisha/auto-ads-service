@@ -85,4 +85,3 @@ def get_logger(name: str) -> logging.Logger:
     :rtype: logging.Logger
     """
     return logging.getLogger(f"backend.{name}")
-

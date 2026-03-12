@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import Any
+
 
 @dataclass
 class Car:
@@ -8,6 +10,18 @@ class Car:
     price: float
     color: str
     url: str
+
+    @classmethod
+    def from_sqlalchemy(cls, sa_car: Any) -> "Car":
+        return cls(
+            brand=sa_car.brand,
+            model=sa_car.model,
+            year=sa_car.year,
+            price=sa_car.price,
+            color=sa_car.color,
+            url=sa_car.url,
+        )
+
 
 @dataclass
 class Filter:

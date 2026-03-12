@@ -63,9 +63,6 @@ class Database:
 db = Database()
 
 
-async def init_db():
-    await db.initialize()
-
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """

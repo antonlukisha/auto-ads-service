@@ -14,7 +14,6 @@ export default function Cars() {
     const navigate = useNavigate()
     const [carList, setCarList] = useState<Car[]>([])
     const [loading, setLoading] = useState(true)
-    const [user, setUser] = useState<any>({ email: 'demo@example.com' })
     const [filters, setFilters] = useState<FilterParams>({
         limit: 10,
         sort_by: 'created_at',
@@ -35,14 +34,9 @@ export default function Cars() {
 
     useEffect(() => {
         loadCars()
-    }, [])
-
-    useEffect(() => {
-        if (user) loadCars()
     }, [filters])
 
     const handleLogout = async () => {
-        setUser(null)
         navigate('/login')
     }
 
@@ -53,8 +47,6 @@ export default function Cars() {
             minimumFractionDigits: 0
         }).format(price)
     }
-
-    if (!user) return null
 
     return (
         <Sheet sx={{ minHeight: '100vh', bgcolor: 'background.body' }}>
@@ -107,6 +99,13 @@ export default function Cars() {
                         size="sm"
                     />
                     <Input
+                        placeholder="Цвет"
+                        value={filters.color || ''}
+                        onChange={(e) => setFilters(f => ({ ...f, color: e.target.value }))}
+                        sx={{ width: 150 }}
+                        size="sm"
+                    />
+                    <Input
                         placeholder="Мин. стоимость"
                         type="number"
                         value={filters.min_price || ''}
@@ -119,6 +118,22 @@ export default function Cars() {
                         type="number"
                         value={filters.max_price || ''}
                         onChange={(e) => setFilters(f => ({ ...f, max_price: e.target.value ? Number(e.target.value) : undefined }))}
+                        sx={{ width: 140 }}
+                        size="sm"
+                    />
+                    <Input
+                        placeholder="Мин. год"
+                        type="number"
+                        value={filters.min_year || ''}
+                        onChange={(e) => setFilters(f => ({ ...f, min_year: e.target.value ? Number(e.target.value) : undefined }))}
+                        sx={{ width: 140 }}
+                        size="sm"
+                    />
+                    <Input
+                        placeholder="Макс. год"
+                        type="number"
+                        value={filters.max_year || ''}
+                        onChange={(e) => setFilters(f => ({ ...f, max_year: e.target.value ? Number(e.target.value) : undefined }))}
                         sx={{ width: 140 }}
                         size="sm"
                     />

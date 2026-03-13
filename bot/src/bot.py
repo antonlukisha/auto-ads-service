@@ -20,6 +20,9 @@ logger = get_logger(__name__)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Send a message when the command /start is issued.
+    """
     await update.message.reply_text(
         "*Объявления о продаже автомобилей с сайта carsensor.net*\n\n"
         "Я помогу найти машину! Просто напишите, что ищете.\n\n"
@@ -35,6 +38,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Send a message when the command /help is issued.
+    """
     await update.message.reply_text(
         "*Как искать:*\n\n"
         "Просто напишите, что хотите найти. Например:\n"
@@ -49,6 +55,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Handle incoming messages.
+    """
     text = update.message.text
     logger.info(f"Request from {update.effective_user.first_name}: {text}")
     await update.message.chat.send_action(action="typing")
@@ -62,10 +71,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Handle errors.
+    """
     logger.error(f"Error: {context.error}", exc_info=context.error)
 
 
 async def main() -> None:
+    """
+    Main entry point for the bot.
+    """
     if not TELEGRAM_TOKEN:
         logger.error("TELEGRAM_TOKEN not found. Get it from @BotFather")
         return

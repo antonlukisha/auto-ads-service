@@ -13,6 +13,7 @@ class Car:
 
     @classmethod
     def from_sqlalchemy(cls, sa_car: Any) -> "Car":
+        """Create a Car object from a SQLAlchemy Car object."""
         return cls(
             brand=sa_car.brand,
             model=sa_car.model,

@@ -18,7 +18,7 @@
       "AllowCredentials": true
     },
     "Serve": {
-      "Address": "localhost:4444"
+      "Address": "0.0.0.0:4444"
     }
   }
 }

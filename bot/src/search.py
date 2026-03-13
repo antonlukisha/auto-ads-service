@@ -13,6 +13,14 @@ logger = get_logger("search")
 
 
 async def search_cars_via_llm(user_prompt: str) -> str:
+    """
+    Search cars via LLM.
+
+    :param user_prompt: User prompt
+    :type user_prompt: str
+    :return: Answer from LLM
+    :rtype: str
+    """
     try:
         result: LLMResult = await llm.invoke(user_prompt)
 
@@ -39,6 +47,14 @@ async def search_cars_via_llm(user_prompt: str) -> str:
 
 
 async def get_cars_from_db(filters: Filter) -> list[Car]:
+    """
+    Get cars from DB.
+
+    :param filters: Filters
+    :type filters: Filter
+    :return: List of cars
+    :rtype: list[Car]
+    """
     cars = []
 
     try:
@@ -85,6 +101,18 @@ async def get_cars_from_db(filters: Filter) -> list[Car]:
 
 
 def format_answer(user_prompt: str, cars: list[Car], filters: Filter) -> str:
+    """
+    Format answer.
+
+    :param user_prompt: User prompt
+    :type user_prompt: str
+    :param cars: List of cars
+    :type cars: list[Car]
+    :param filters: Filter params
+    :type filters: Filter
+    :return: Formatted answer
+    :rtype: str
+    """
     if not cars:
         return f"По запросу `{user_prompt}` ничего не найдено.\n\nПопробуйте изменить параметры поиска."
 

@@ -75,6 +75,14 @@ class LLMAgent:
         }
 
     async def invoke(self, user_prompt: str) -> LLMResult:
+        """
+        Invoke LLM with user prompt
+
+        :param user_prompt: User prompt
+        :type user_prompt: str
+        :return: LLM result
+        :rtype: LLMResult
+        """
         try:
             response = await self.client.chat.completions.create(
                 model=self.model,

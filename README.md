@@ -72,5 +72,5 @@ docker ps | grep auto-ads
 ## Автор
 
 [![Gmail](https://img.shields.io/badge/-Gmail-D14836?style=flat-square&logo=Gmail&logoColor=white)](mailto:anton.lukisha.dev@gmail.com)
-[![GitHub](https://img.shields.io/badge/-GitHub-333?style=flat-square&logo=GitHub&logoColor=white)](https://github.com/antonlukisha/antonlukisha)
+[![GitHub](https://img.shields.io/badge/-GitHub-333?style=flat-square&logo=GitHub&logoColor=white)](https://github.com/antonlukisha)
 [![Telegram](https://img.shields.io/badge/-Telegram-27A7E7?style=flat-square&logo=Telegram&logoColor=white)](https://t.me/lukanlo)

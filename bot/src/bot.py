@@ -23,6 +23,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Send a message when the command /start is issued.
     """
+    if update.message is None:
+        logger.error("Update message is None in start handler")
+        return
+
     await update.message.reply_text(
         "*Объявления о продаже автомобилей с сайта carsensor.net*\n\n"
         "Я помогу найти машину! Просто напишите, что ищете.\n\n"
@@ -34,13 +38,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Я сам пойму, что вы ищете!",
         parse_mode="Markdown",
     )
-    logger.info(f"User {update.effective_user.id} started the bot")
+    if update.effective_user is not None:
+        logger.info(f"User {update.effective_user.id} started the bot")
+    else:
+        logger.info("Unknown user started the bot")
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Send a message when the command /help is issued.
     """
+    if update.message is None:
+        logger.error("Update message is None in help handler")
+        return
     await update.message.reply_text(
         "*Как искать:*\n\n"
         "Просто напишите, что хотите найти. Например:\n"
@@ -58,8 +68,26 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     """
     Handle incoming messages.
     """
+    if update.message is None:
+        logger.error("Update message is None in message handler")
+        return
+
     text = update.message.text
-    logger.info(f"Request from {update.effective_user.first_name}: {text}")
+
+    if text is None:
+        logger.error("Message text is None")
+        return
+
+    user_name = "Unknown"
+    if update.effective_user is not None:
+        user_name = update.effective_user.first_name or "Неизвестный"
+
+    logger.info(f"Request from {user_name}: {text}")
+
+    if update.message.chat is None:
+        logger.error("Message chat is None")
+        return
+
     await update.message.chat.send_action(action="typing")
     try:
         answer = await search_cars_via_llm(text)
@@ -67,10 +95,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             answer, parse_mode="Markdown", disable_web_page_preview=False
         )
     except Exception as e:
-        update.message.reply_text(e)
+        await update.message.reply_text(str(e))
 
 
-async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Handle errors.
     """
@@ -88,6 +116,11 @@ async def main() -> None:
     if not LLM_API_KEY or not LLM_MODEL:
         logger.error("LLM_API_KEY or LLM_MODEL not found.")
         return
+
+    if POSTGRES_DSN is None:
+        logger.error("POSTGRES_DSN not found.")
+        return
+
     try:
         await db.initialize(POSTGRES_DSN)
     except Exception as e:
@@ -108,13 +141,17 @@ async def main() -> None:
     await app.start()
 
     try:
+        if app.updater is None:
+            logger.error("Updater is None")
+            return
         await app.updater.start_polling()
         while True:
             await asyncio.sleep(1)
     except KeyboardInterrupt:
         logger.info("Bot stopping...")
     finally:
-        await app.updater.stop()
+        if app.updater is not None:
+            await app.updater.stop()
         await app.stop()
         await app.shutdown()
         await db.close()

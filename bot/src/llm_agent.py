@@ -84,7 +84,7 @@ class LLMAgent:
         :rtype: LLMResult
         """
         try:
-            response = await self.client.chat.completions.create(
+            response = await self.client.chat.completions.create(  # type: ignore
                 model=self.model,
                 messages=[
                     {

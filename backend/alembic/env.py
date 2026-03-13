@@ -8,25 +8,20 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from app.core.logging import setup_logging
 
 sys.path.append(str(Path(__file__).parent.parent))
 
-from app.core.config import Config, get_config
+from app.core.config import Config
 from app.models.sqlalchemy_models import Base
 
-setup_logging(level="INFO")
-
 config = context.config
-
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
+fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:
-    cfg = get_config()
+    cfg = Config.load("config.json")
     url = cfg.postgres_dsn
 
     context.configure(

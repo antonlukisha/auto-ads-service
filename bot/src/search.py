@@ -24,7 +24,7 @@ async def search_cars_via_llm(user_prompt: str) -> str:
     try:
         result: LLMResult = await llm.invoke(user_prompt)
 
-        if not result.success:
+        if not result.success or not result.filters:
             raise Exception("Request failed")
         filters = Filter(
             limit=result.filters.get("limit", 10),

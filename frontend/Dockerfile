@@ -20,4 +20,4 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3333
 
-CMD ["yarn", "preview", "--host", "0.0.0.0"]
+CMD ["yarn", "preview", "--host", "0.0.0.0", "--port", "3333"]

@@ -17,4 +17,6 @@ ENV PATH="/venv/bin:$PATH" \
 
 COPY . .
 
+EXPOSE 5555
+
 CMD ["uv", "run", "bot"]

@@ -20,4 +20,8 @@ COPY alembic.ini config.json .flake8 .python-version py.typed ./
 
 EXPOSE 4444
 
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["uv", "run", "service"]

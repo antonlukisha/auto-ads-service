@@ -20,6 +20,7 @@ backend/*.db
 backend/*.sqlite3
 backend/alembic/versions/*.py
 !backend/alembic/versions/__init__.py
+!backend/alembic/versions/001_init.py
 backend/*.log
 backend/logs/
 backend/dist/
@@ -61,6 +62,9 @@ frontend/logs/
 *.swp
 *.swo
 *~
+
+# Enviroument
+.env
 
 # Build
 dist/

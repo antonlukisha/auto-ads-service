@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import {
     Sheet, Table, Typography, Button, Chip,
     CircularProgress, Box, IconButton, Input,
-    Select, Option, Stack, Avatar, Dropdown, Menu, MenuButton, MenuItem
+    Select, Option, Stack
 } from '@mui/joy'
-import { RefreshRounded, OpenInNewRounded, LogoutRounded, PersonRounded } from '@mui/icons-material'
+import { RefreshRounded, OpenInNewRounded, LogoutRounded } from '@mui/icons-material'
 import { api } from '../api/client'
 import type { Car, FilterParams } from "../types/car";
 
@@ -87,21 +87,21 @@ export default function Cars() {
                     <Input
                         placeholder="Бренд"
                         value={filters.brand || ''}
-                        onChange={(e) => setFilters(f => ({ ...f, brand: e.target.value }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters((f: FilterParams) => ({ ...f, brand: e.target.value }))}
                         sx={{ width: 150 }}
                         size="sm"
                     />
                     <Input
                         placeholder="Модель"
                         value={filters.model || ''}
-                        onChange={(e) => setFilters(f => ({ ...f, model: e.target.value }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters((f: FilterParams) => ({ ...f, model: e.target.value }))}
                         sx={{ width: 150 }}
                         size="sm"
                     />
                     <Input
                         placeholder="Цвет"
                         value={filters.color || ''}
-                        onChange={(e) => setFilters(f => ({ ...f, color: e.target.value }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters((f: FilterParams) => ({ ...f, color: e.target.value }))}
                         sx={{ width: 150 }}
                         size="sm"
                     />
@@ -109,7 +109,7 @@ export default function Cars() {
                         placeholder="Мин. стоимость"
                         type="number"
                         value={filters.min_price || ''}
-                        onChange={(e) => setFilters(f => ({ ...f, min_price: e.target.value ? Number(e.target.value) : undefined }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters((f: FilterParams) => ({ ...f, min_price: e.target.value ? Number(e.target.value) : undefined }))}
                         sx={{ width: 140 }}
                         size="sm"
                     />
@@ -117,7 +117,7 @@ export default function Cars() {
                         placeholder="Макс. стоимость"
                         type="number"
                         value={filters.max_price || ''}
-                        onChange={(e) => setFilters(f => ({ ...f, max_price: e.target.value ? Number(e.target.value) : undefined }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters((f: FilterParams) => ({ ...f, max_price: e.target.value ? Number(e.target.value) : undefined }))}
                         sx={{ width: 140 }}
                         size="sm"
                     />
@@ -125,7 +125,7 @@ export default function Cars() {
                         placeholder="Мин. год"
                         type="number"
                         value={filters.min_year || ''}
-                        onChange={(e) => setFilters(f => ({ ...f, min_year: e.target.value ? Number(e.target.value) : undefined }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters((f: FilterParams) => ({ ...f, min_year: e.target.value ? Number(e.target.value) : undefined }))}
                         sx={{ width: 140 }}
                         size="sm"
                     />
@@ -133,13 +133,13 @@ export default function Cars() {
                         placeholder="Макс. год"
                         type="number"
                         value={filters.max_year || ''}
-                        onChange={(e) => setFilters(f => ({ ...f, max_year: e.target.value ? Number(e.target.value) : undefined }))}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters((f: FilterParams) => ({ ...f, max_year: e.target.value ? Number(e.target.value) : undefined }))}
                         sx={{ width: 140 }}
                         size="sm"
                     />
                     <Select
                         value={filters.sort_by || 'created_at'}
-                        onChange={(_, v) => setFilters(f => ({ ...f, sort_by: v as string || 'created_at' }))}
+                        onChange={(_, v) => setFilters((f: FilterParams) => ({ ...f, sort_by: v as string || 'created_at' }))}
                         sx={{ width: 120 }}
                         size="sm"
                     >
@@ -228,11 +228,11 @@ export default function Cars() {
 
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mt: 2 }}>
                     <Typography level="body-sm" sx={{ color: 'text.secondary' }}>
-                        Показано {carList.length} из {carList.length} машин
+                        Показано {carList.length}
                     </Typography>
                     <Select
                         value={filters.limit || 10}
-                        onChange={(_, v) => setFilters(f => ({ ...f, limit: v as number || 10 }))}
+                        onChange={(_, v) => setFilters((f: FilterParams) => ({ ...f, limit: v as number || 10 }))}
                         size="sm"
                         sx={{ width: 100 }}
                     >

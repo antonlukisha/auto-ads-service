@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: auto-ads-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: auto-ads-service
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - auto-ads-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: auto-ads-backend
+    restart: unless-stopped
+    ports:
+      - "4444:4444"
+    environment:
+      - POSTGRES_DSN=postgresql://postgres:123@postgres:5432/auto-ads-service
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-Ns6heZJANxbvexzSdCCm1b2pyMtl0zAWczNaokBEhMt}
+    volumes:
+      - ./backend/config.json:/app/config.json
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - auto-ads-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  bot:
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    container_name: auto-ads-bot
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DSN=postgresql://postgres:123@postgres:5432/auto-ads-service
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - LLM_URL=${LLM_URL:-https://openrouter.ai/api/v1}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-stepfun/step-3.5-flash:free}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    networks:
+      - auto-ads-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: auto-ads-frontend
+    restart: unless-stopped
+    ports:
+      - "3333:3333"
+    environment:
+      - VITE_API_URL=http://backend:4444/api
+    depends_on:
+      - backend
+    networks:
+      - auto-ads-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  auto-ads-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

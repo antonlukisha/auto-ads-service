@@ -40,7 +40,7 @@ export default function Login() {
                             type="text"
                             placeholder="Логин"
                             value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
                             required
                             size="lg"
                         />
@@ -48,7 +48,7 @@ export default function Login() {
                             type="password"
                             placeholder="Пароль"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                             required
                             size="lg"
                         />

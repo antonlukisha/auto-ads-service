@@ -8,8 +8,11 @@ class ApiClient {
     private accessToken: string | null = null
 
     constructor() {
+
+        const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:4444/api'
+
         this.client = axios.create({
-            baseURL: 'http://localhost:4444/api',
+            baseURL: baseURL,
             headers: {
                 'Content-Type': 'application/json',
             },

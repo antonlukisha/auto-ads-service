@@ -34,7 +34,7 @@ cp .env.example .env
 |------------|----------|---------------------------------------------------------|
 | `POSTGRES_USER` | Имя пользователя БД | `postgres` (или любое другое имя) |
 | `POSTGRES_PASSWORD` | Пароль для БД | Придумайте пароль, например `123` (для локальной разработки)         |
-| `POSTGRES_DB` | Название базы данных | Можно оставить `auto-ads-service`                       |
+| `POSTGRES_DB` | Название базы данных | Имя существующей бд. Например: `auto-ads-service`                       |
 | `POSTGRES_DSN` | Строка подключения к БД | `postgresql://postgres:123@postgres:5432/auto-ads-service` (замените `123` на ваш пароль)                    |
 | `JWT_SECRET_KEY` | Секретный ключ для JWT | Сгенерировать самостоятельно (см. инструкцию ниже)      |
 | `TELEGRAM_TOKEN` | Токен Telegram бота | Получить у [@BotFather](https://t.me/botfather)         |
